@@ -34,6 +34,7 @@ build/
 
 ### application.properties ###
 application.properties
+application-test.properties
 
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,windows,macos
 
