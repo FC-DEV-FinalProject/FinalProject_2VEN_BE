@@ -29,7 +29,7 @@ public class InvestmentAssetClassesRestController {
     @ApiResponse(responseCode="401", description = "Unauthorized")
     @ApiResponse(responseCode="405", description = "Wrong Request Method")
     @ApiResponse(responseCode="500", description = "Other Errors")
-    public ResponseEntity<Map> getAllInvestmentAssetClasses(@RequestParam(value = "page", defaultValue = "1") int page,
+    public ResponseEntity<Map> getAllInvestmentAssetClasses(@RequestParam(value = "page", defaultValue = "0") int page,
                                                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) throws Exception{
         //TODO)관리자 판별
         Map pageList = iacService.getList(page, pageSize);

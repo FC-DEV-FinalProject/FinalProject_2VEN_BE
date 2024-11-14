@@ -38,7 +38,7 @@ public class TradingTypeController {
     }
 
     // 1-1. 매매유형 상세 조회 메서드
-    @GetMapping("/trading_types/{id}")
+    @GetMapping("/trading-types/{id}")
     @ApiResponse(responseCode = "200", description = "Get Trading Type by ID")
     public ResponseEntity<Map<String, Object>> getTradingTypeById(@PathVariable("id") Integer id) {
         // 매매유형 ID로 조회
@@ -55,7 +55,7 @@ public class TradingTypeController {
     }
 
     // 2. 매매유형 등록
-    @PostMapping("/trading_types")
+    @PostMapping("/trading-types")
     @ApiResponse(responseCode = "201", description = "Create Trading Type")
     public ResponseEntity<Map<String, String>> createTradingType(@Valid @RequestBody TradingTypeAdminRequestDto tradingTypeAdminRequestDto) {
         // 매매유형 등록
@@ -72,38 +72,38 @@ public class TradingTypeController {
     }
 
     // 3. 매매유형 삭제
-    @DeleteMapping("/trading_types/{id}")
-    @ApiResponse(responseCode = "204", description = "Delete Trading Type")
+    @DeleteMapping("/trading-types/{id}")
+    @ApiResponse(responseCode = "200", description = "Delete Trading Type")
     public ResponseEntity<Map<String, String>> deleteTradingType(@PathVariable Integer id) {
         tradingTypeService.deleteTradingType(id);
 
         // 타임스탬프를 추가
         Instant timestamp = Instant.now();
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(
+        return ResponseEntity.ok(Map.of(
                 "msg", "DELETE_SUCCESS",
                 "timestamp", timestamp.toString()
-        )); // 204 No Content 반환
+        ));
     }
 
     // 3-1. 매매유형 논리적 삭제
-    @PatchMapping("/trading_types/{id}")
-    @ApiResponse(responseCode = "204", description = "Soft Delete Trading Type")
+    @PatchMapping("/trading-types/{id}")
+    @ApiResponse(responseCode = "200", description = "Soft Delete Trading Type")
     public ResponseEntity<Map<String, String>> softDeleteTradingType(@PathVariable Integer id) {
         tradingTypeService.softDeleteTradingType(id);
 
         // 타임스탬프를 추가
         Instant timestamp = Instant.now();
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(
+        return ResponseEntity.ok(Map.of(
                 "msg", "DELETE_SUCCESS",
                 "timestamp", timestamp.toString()
-        )); // 204 No Content 반환
+        ));
     }
 
     // 4. 매매유형 수정
-    @PutMapping("/trading_types/{id}")
-    @ApiResponse(responseCode = "204", description = "Update Trading Type")
+    @PutMapping("/trading-types/{id}")
+    @ApiResponse(responseCode = "200", description = "Update Trading Type")
     public ResponseEntity<Map<String, String>> updateTradingType(
             @PathVariable Integer id,
             @Valid @RequestBody TradingTypeAdminRequestDto tradingTypeAdminRequestDto) {
@@ -114,9 +114,9 @@ public class TradingTypeController {
         // 타임스탬프를 추가
         Instant timestamp = Instant.now();
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(
+        return ResponseEntity.ok(Map.of(
                 "msg", "UPDATE_SUCCESS",
                 "timestamp", timestamp.toString()
-        )); // 204 No Content 반환
+        ));
     }
 }

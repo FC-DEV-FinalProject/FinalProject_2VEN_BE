@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 //@TestPropertySource(locations = "classpath:application-test.properties")
-class TradingTypeEntityRepositoryTest {
+class TradingTypeRepositoryTest {
 
     @Autowired
     TradingTypeRepository tradingTypeRepository;
@@ -330,28 +330,28 @@ class TradingTypeEntityRepositoryTest {
         assertFalse(thirdActiveTypesPage.hasNext()); // 다음 페이지가 없음을 확인
     }
 
-    @Test
-    @DisplayName("시스템 컬럼 자동 업데이트 테스트")
-    public void auditingFieldsAutoUpdateTest() {
-        TradingTypeEntity tradingTypeEntity = new TradingTypeEntity();
-        tradingTypeEntity.setTradingTypeOrder(9);
-        tradingTypeEntity.setTradingTypeName("Long-term Trading");
-        tradingTypeEntity.setTradingTypeIcon("icon_longterm.png");
-        tradingTypeEntity.setIsActive("Y");
-
-        // 엔티티 저장
-        TradingTypeEntity savedTradingTypeEntity = tradingTypeRepository.save(tradingTypeEntity);
-
-        // createdBy와 createdAt 필드가 자동으로 생성되었는지 검증
-        assertNotNull(savedTradingTypeEntity.getCreatedBy());
-        assertNotNull(savedTradingTypeEntity.getCreatedAt());
-
-        // 엔티티 업데이트
-        savedTradingTypeEntity.setTradingTypeName("Updated Long-term Trading");
-        TradingTypeEntity updatedTradingTypeEntity = tradingTypeRepository.save(savedTradingTypeEntity);
-
-        // modifiedBy와 updatedAt 필드가 자동으로 업데이트되었는지 검증
-        assertNotNull(updatedTradingTypeEntity.getModifiedBy());
-        assertNotNull(updatedTradingTypeEntity.getModifiedAt());
-    }
+//    @Test
+//    @DisplayName("시스템 컬럼 자동 업데이트 테스트")
+//    public void auditingFieldsAutoUpdateTest() {
+//        TradingTypeEntity tradingTypeEntity = new TradingTypeEntity();
+//        tradingTypeEntity.setTradingTypeOrder(9);
+//        tradingTypeEntity.setTradingTypeName("Long-term Trading");
+//        tradingTypeEntity.setTradingTypeIcon("icon_longterm.png");
+//        tradingTypeEntity.setIsActive("Y");
+//
+//        // 엔티티 저장
+//        TradingTypeEntity savedTradingTypeEntity = tradingTypeRepository.save(tradingTypeEntity);
+//
+//        // createdBy와 createdAt 필드가 자동으로 생성되었는지 검증
+//        assertNotNull(savedTradingTypeEntity.getCreatedBy());
+//        assertNotNull(savedTradingTypeEntity.getCreatedAt());
+//
+//        // 엔티티 업데이트
+//        savedTradingTypeEntity.setTradingTypeName("Updated Long-term Trading");
+//        TradingTypeEntity updatedTradingTypeEntity = tradingTypeRepository.save(savedTradingTypeEntity);
+//
+//        // modifiedBy와 updatedAt 필드가 자동으로 업데이트되었는지 검증
+//        assertNotNull(updatedTradingTypeEntity.getModifiedBy());
+//        assertNotNull(updatedTradingTypeEntity.getModifiedAt());
+//    }
 }

@@ -8,6 +8,7 @@ import com.sysmatic2.finalbe.cs.entity.FAQCategory;
 import com.sysmatic2.finalbe.cs.repository.FAQCategoryRepository;
 import com.sysmatic2.finalbe.cs.repository.FAQRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,13 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@TestPropertySource(locations = "classpath:application-test.properties")
 class FAQServiceTest {
 
     @Autowired
@@ -41,6 +42,9 @@ class FAQServiceTest {
 
     @BeforeEach
     void setUp() {
+        faqRepository.deleteAll();
+        faqCategoryRepository.deleteAll();
+
         // 테스트용 FAQCatgory를 저장
         category = new FAQCategory();
         category.setName("General");
@@ -51,7 +55,7 @@ class FAQServiceTest {
     @Test
     public void whenCreateFAQ_thenSuccessForAdmin() {
         // given
-        FAQ faq = new FAQ();
+        AdminFAQDto faq = new AdminFAQDto();
         faq.setQuestion("What is FAQ?");
         faq.setAnswer("This is FAQ");
         faq.setWriterId(1L);
@@ -59,7 +63,7 @@ class FAQServiceTest {
         faq.setFaqCategory(category);
 
         // when
-        AdminFAQDto createdFAQ = faqService.createFAQ(faq, "ADMIN");
+        AdminFAQDto createdFAQ = faqService.createFAQ(faq);
 
         // then
         assertNotNull(createdFAQ);
@@ -68,61 +72,78 @@ class FAQServiceTest {
     }
 
     @Test
-    public void whenCreateFAQ_thenFindAllForAdmin() {
+    void getAllFAQsAsAdminTest() {
         // given
+        int page = 0;
+        int pageSize = 10;
+        String role = "ROLE_ADMIN";
+
         for (int i = 1; i <= 10; i++) {
-            FAQ faq = new FAQ();
+            AdminFAQDto faq = new AdminFAQDto();
             faq.setQuestion("What is FAQ?" + i);
             faq.setAnswer("This is FAQ" + i);
             faq.setWriterId(1L);
             faq.setPostedAt(LocalDateTime.now());
             faq.setFaqCategory(category);
-            faqService.createFAQ(faq, "ADMIN");
+            faqService.createFAQ(faq);
         }
 
         // when
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<FAQResponse> faqList = faqService.getAllFAQs("ADMIN", pageable);
+        Map<String, Object> response = faqService.getAllFAQs(page, pageSize, role);
 
         // then
-        assertEquals(10, faqList.getTotalElements());
-        assertThat(faqList.getContent().get(0)).isInstanceOf(AdminFAQDto.class);
+        assertEquals(10L, response.get("totalElements"));
+        assertEquals(1, response.get("totalPages"));
+        assertTrue((Boolean) response.get("isFirstPage"));
+        assertTrue((Boolean) response.get("isLastPage"));
+        assertEquals(page, response.get("currentPage"));
+        assertEquals(pageSize, response.get("pageSize"));
 
-        AdminFAQDto firstFaq = (AdminFAQDto) faqList.getContent().get(0);
-        assertEquals("What is FAQ?1", firstFaq.getQuestion());
-        assertEquals("This is FAQ1", firstFaq.getAnswer());
+        // 데이터 검증
+        List<?> data = (List<?>) response.get("data");
+        assertEquals(10, data.size());
+        assertTrue(data.get(0) instanceof AdminFAQDto);
     }
 
+
     @Test
-    public void whenCreateFAQ_thenFindAllForUser() {
+    void getAllFAQsAsUserTest() {
         // given
+        int page = 0;
+        int pageSize = 10;
+        String role = "ROLE_USER";
+
         for (int i = 1; i <= 10; i++) {
-            FAQ faq = new FAQ();
+            AdminFAQDto faq = new AdminFAQDto();
             faq.setQuestion("What is FAQ?" + i);
             faq.setAnswer("This is FAQ" + i);
             faq.setWriterId(1L);
             faq.setPostedAt(LocalDateTime.now());
             faq.setFaqCategory(category);
-            faqService.createFAQ(faq, "ADMIN");
+            faqService.createFAQ(faq);
         }
 
         // when
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<FAQResponse> faqList = faqService.getAllFAQs("USER", pageable);
+        Map<String, Object> response = faqService.getAllFAQs(page, pageSize, role);
 
         // then
-        assertEquals(10, faqList.getTotalElements());
-        assertThat(faqList.getContent().get(0)).isInstanceOf(UserFAQDto.class);
+        assertEquals(10L, response.get("totalElements"));
+        assertEquals(1, response.get("totalPages"));
+        assertTrue((Boolean) response.get("isFirstPage"));
+        assertTrue((Boolean) response.get("isLastPage"));
+        assertEquals(page, response.get("currentPage"));
+        assertEquals(pageSize, response.get("pageSize"));
 
-        UserFAQDto firstFaq = (UserFAQDto) faqList.getContent().get(0);
-        assertEquals("What is FAQ?1", firstFaq.getQuestion());
-        assertEquals("This is FAQ1", firstFaq.getAnswer());
+        // 데이터 검증
+        List<?> data = (List<?>) response.get("data");
+        assertEquals(10, data.size());
+        assertTrue(data.get(0) instanceof UserFAQDto);
     }
 
     @Test
     public void whenCreateFAQ_thenFindByIdForAdmin(){
         // given
-        FAQ faq = new FAQ();
+        AdminFAQDto faq = new AdminFAQDto();
         faq.setQuestion("What is FAQ?");
         faq.setAnswer("This is FAQ");
         faq.setWriterId(1L);
@@ -130,7 +151,7 @@ class FAQServiceTest {
         faq.setFaqCategory(category);
 
         // when
-        AdminFAQDto createdFAQ = faqService.createFAQ(faq, "ADMIN");
+        AdminFAQDto createdFAQ = faqService.createFAQ(faq);
         FAQ findFAQ = faqRepository.findById(createdFAQ.getId()).get();
 
         // then
@@ -142,29 +163,29 @@ class FAQServiceTest {
     @Test
     public void whenUpdateById_thenSuccessForAdmin() {
         // given
-        FAQ faq = new FAQ();
+        AdminFAQDto faq = new AdminFAQDto();
         faq.setQuestion("What is FAQ?");
         faq.setAnswer("This is FAQ");
         faq.setWriterId(1L);
         faq.setPostedAt(LocalDateTime.now());
         faq.setFaqCategory(category);
-        AdminFAQDto createdFAQ = faqService.createFAQ(faq, "ADMIN");
+        AdminFAQDto createdFAQ = faqService.createFAQ(faq);
 
         // when
         createdFAQ.setQuestion("updated FAQ?");
         createdFAQ.setAnswer("updated FAQ");
 
-        // 업데이트를 위해 AdminFAQDto를 FAQ 엔티티로 변환
-        FAQ updatedFAQEntity = new FAQ();
-        updatedFAQEntity.setId(createdFAQ.getId());  // ID 설정이 필요
-        updatedFAQEntity.setQuestion(createdFAQ.getQuestion());
-        updatedFAQEntity.setAnswer(createdFAQ.getAnswer());
-        updatedFAQEntity.setWriterId(createdFAQ.getWriterId());
-        updatedFAQEntity.setPostedAt(createdFAQ.getPostedAt());
-        updatedFAQEntity.setFaqCategory(createdFAQ.getFaqCategory());
-        updatedFAQEntity.setIsActive(createdFAQ.getIsActive());
+//        // 업데이트를 위해 AdminFAQDto를 FAQ 엔티티로 변환
+//        FAQ updatedFAQEntity = new FAQ();
+//        updatedFAQEntity.setId(createdFAQ.getId());  // ID 설정이 필요
+//        updatedFAQEntity.setQuestion(createdFAQ.getQuestion());
+//        updatedFAQEntity.setAnswer(createdFAQ.getAnswer());
+//        updatedFAQEntity.setWriterId(createdFAQ.getWriterId());
+//        updatedFAQEntity.setPostedAt(createdFAQ.getPostedAt());
+//        updatedFAQEntity.setFaqCategory(createdFAQ.getFaqCategory());
+//        updatedFAQEntity.setIsActive(createdFAQ.getIsActive());
 
-        AdminFAQDto updatedFAQ = faqService.updateFAQ(updatedFAQEntity.getId(), updatedFAQEntity, "ADMIN");
+        AdminFAQDto updatedFAQ = faqService.updateFAQ(createdFAQ.getId(), createdFAQ, "ADMIN");
 
         // then
         assertNotNull(updatedFAQ);
@@ -176,13 +197,13 @@ class FAQServiceTest {
     @Test
     public void whenDeleteById_thenSuccessForAdmin() {
         // given
-        FAQ faq = new FAQ();
+        AdminFAQDto faq = new AdminFAQDto();
         faq.setQuestion("What is FAQ?");
         faq.setAnswer("This is FAQ");
         faq.setWriterId(1L);
         faq.setPostedAt(LocalDateTime.now());
         faq.setFaqCategory(category);
-        AdminFAQDto createdFAQ = faqService.createFAQ(faq, "ADMIN");
+        AdminFAQDto createdFAQ = faqService.createFAQ(faq);
 
         // when
         faqService.deleteFAQ(createdFAQ.getId(), "ADMIN");
@@ -192,8 +213,14 @@ class FAQServiceTest {
     }
 
     @Test
-    public void whenSearchFaqsIgnore_thenSuccessForAdmin() {
+    @DisplayName("Search FAQs - Success for Keyword 'FAQ'")
+    void testSearchFAQs_withKeywordFAQ() {
         // given
+        String keyword = "faq";
+        int page = 0;
+        int pageSize = 10;
+        String role = "ROLE_USER";
+
         FAQ faq = new FAQ();
         faq.setQuestion("What is faq?");
         faq.setAnswer("This is faq");
@@ -212,13 +239,24 @@ class FAQServiceTest {
         faqRepository.save(faq2);
 
         // when
-        String keyword = "faq";
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<UserFAQDto> result = faqService.searchFAQs(keyword, pageable);
+        Map<String, Object> result = faqService.searchFAQs(page, pageSize, keyword);
 
         // then
-        assertEquals(1, result.getTotalElements());
-        assertEquals("What is faq?", result.getContent().get(0).getQuestion());
+        assertEquals(1L, result.get("totalElements"));
+        assertEquals(1, result.get("totalPages"));
+        assertTrue((Boolean) result.get("isFirstPage"));
+        assertTrue((Boolean) result.get("isLastPage"));
+        assertEquals(page, result.get("currentPage"));
+        assertEquals(pageSize, result.get("pageSize"));
+
+        // FAQ 데이터 확인
+        @SuppressWarnings("unchecked")
+        List<UserFAQDto> data = (List<UserFAQDto>) result.get("data");
+        assertEquals(1, data.size());
+
+        UserFAQDto faqData = data.get(0);
+        assertEquals("What is faq?", faqData.getQuestion());
+        assertEquals("This is faq", faqData.getAnswer());
 
     }
 }

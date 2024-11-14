@@ -7,14 +7,15 @@ import com.sysmatic2.finalbe.cs.entity.FAQ;
 import com.sysmatic2.finalbe.cs.repository.FAQCategoryRepository;
 import com.sysmatic2.finalbe.cs.repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.sysmatic2.finalbe.util.CreatePageResponse.createPageResponse;
 
 @Service
 public class FAQService {
@@ -29,8 +30,14 @@ public class FAQService {
     }
 
     @Transactional
-    public AdminFAQDto createFAQ(FAQ faq, String role){
-        validateAdminRole(role);
+    public AdminFAQDto createFAQ(AdminFAQDto AdminFaq){
+        FAQ faq = new FAQ();
+        faq.setWriterId(AdminFaq.getWriterId());
+        faq.setQuestion(AdminFaq.getQuestion());
+        faq.setAnswer(AdminFaq.getAnswer());
+        faq.setPostedAt(AdminFaq.getPostedAt());
+        faq.setFaqCategory(AdminFaq.getFaqCategory());
+
         FAQ savedFaq = faqRepository.save(faq);
         return new AdminFAQDto(
                 savedFaq.getId(),
@@ -45,65 +52,47 @@ public class FAQService {
     }
 
 
-//    public List<FAQResponse> getAllFAQs(String role){
-//        List<FAQ> faqs = faqRepository.findAll();
-//
-//        if("ADMIN".equalsIgnoreCase(role)){
-//            return faqs.stream()
-//                    .map(faq -> new AdminFAQDto(
-//                            faq.getId(),
-//                            faq.getQuestion(),
-//                            faq.getAnswer(),
-//                            faq.getWriterId(),
-//                            faq.getPostedAt(),
-//                            faq.getUpdatedAt(),
-//                            faq.getIsActive(),
-//                            faq.getFaqCategory()))
-//                    .collect(Collectors.toList());
-//        } else {
-//            return faqs.stream()
-//                    .map(faq -> new UserFAQDto(
-//                            faq.getId(),
-//                            faq.getQuestion(),
-//                            faq.getAnswer(),
-//                            faq.getFaqCategory()))
-//                    .collect(Collectors.toList());
-//        }
-//    }
+    // 역할에 따른 FAQ 목록 조회
+    @Transactional(readOnly = true)
+    public Map<String, Object> getAllFAQs(int page, int pageSize, String role) {
 
-    // 역할에 따른 FAQ 목록 조회 (페이징 지원)
-    public Page<FAQResponse> getAllFAQs(String role, Pageable pageable) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("id").ascending());
         Page<FAQ> faqPage = faqRepository.findAll(pageable);
 
         // ADMIN 역할인 경우 AdminFAQDto로 매핑하여 반환
-        if ("ADMIN".equalsIgnoreCase(role)) {
-            return faqPage.map(faq -> new AdminFAQDto(
-                    faq.getId(),
-                    faq.getQuestion(),
-                    faq.getAnswer(),
-                    faq.getWriterId(),
-                    faq.getPostedAt(),
-                    faq.getUpdatedAt(),
-                    faq.getIsActive(),
-                    faq.getFaqCategory()
+        if ("ROLE_ADMIN".equalsIgnoreCase(role)) {
+
+            // 페이지 객체 리스트 타입 변경
+            Page<AdminFAQDto> pageDtoList = faqPage.map(faq -> new AdminFAQDto(
+                                        faq.getId(),
+                                        faq.getQuestion(),
+                                        faq.getAnswer(),
+                                        faq.getWriterId(),
+                                        faq.getPostedAt(),
+                                        faq.getUpdatedAt(),
+                                        faq.getIsActive(),
+                                        faq.getFaqCategory()
             ));
+            return createPageResponse(pageDtoList);
         }
         // USER 역할인 경우 UserFAQDto로 매핑하여 반환
         else {
-            return faqPage.map(faq -> new UserFAQDto(
+            Page<UserFAQDto> pageDtoList = faqPage.map(faq -> new UserFAQDto(
                     faq.getId(),
                     faq.getQuestion(),
                     faq.getAnswer(),
                     faq.getFaqCategory()
             ));
+            return createPageResponse(pageDtoList);
         }
+
     }
 
     public FAQResponse getFAQById(Long id, String role) {
         FAQ faq = faqRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("FAQ with id " + id + " not found"));
 
-        if ("ADMIN".equalsIgnoreCase(role)) {
+        if ("ROLE_ADMIN".equalsIgnoreCase(role)) {
             return new AdminFAQDto(
                     faq.getId(),
                     faq.getQuestion(),
@@ -125,8 +114,7 @@ public class FAQService {
     }
 
     @Transactional
-    public AdminFAQDto updateFAQ(Long id, FAQ faq, String role){
-        validateAdminRole(role);
+    public AdminFAQDto updateFAQ(Long id, AdminFAQDto faq, String role){
 
         // 기존 FAQ 조회. 존재하지 않으면 예외 발생
         FAQ existingFAQ = faqRepository.findById(id)
@@ -157,7 +145,6 @@ public class FAQService {
 
     @Transactional
     public void deleteFAQ(Long id, String role){
-        validateAdminRole(role);
 
         // 기존 FAQ 조회. 존재하지 않으면 예외 발생
         FAQ existingFAQ = faqRepository.findById(id)
@@ -167,27 +154,21 @@ public class FAQService {
     }
 
 
-    public Page<UserFAQDto> searchFAQs(String keyword, Pageable pageable) {
+    public Map<String, Object> searchFAQs(int page, int pageSize, String keyword) {
+
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("id").ascending());
         Page<FAQ> faqPage = faqRepository.findByQuestionContainingOrAnswerContaining(keyword, keyword, pageable);
 
-        // FAQ 엔티티를 FAQSearchResultDto로 변환하여 페이지 반환
-        return new PageImpl<>(
-                faqPage.getContent().stream()
-                        .map(faq -> new UserFAQDto(
-                                faq.getId(),
-                                faq.getQuestion(),
-                                faq.getAnswer(),
-                                faq.getFaqCategory() != null ? faq.getFaqCategory() : null))
-                        .collect(Collectors.toList()),
-                pageable,
-                faqPage.getTotalElements()
-        );
+
+        // 페이지 객체 리스트 타입 변경
+        Page<UserFAQDto> pageDtoList = faqPage.map(faq -> new UserFAQDto(
+                faq.getId(),
+                faq.getQuestion(),
+                faq.getAnswer(),
+                faq.getFaqCategory()
+        ));
+        return createPageResponse(pageDtoList);
+
     }
 
-    // ADMIN 권한 검증 메서드
-    private void validateAdminRole(String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            throw new SecurityException("Only admins can perform this operation.");
-        }
-    }
 }

@@ -1,10 +1,15 @@
 package com.sysmatic2.finalbe.cs.repository;
 
+import com.sysmatic2.finalbe.cs.entity.FAQ;
 import com.sysmatic2.finalbe.cs.entity.FAQCategory;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.TestPropertySource;
 
 import javax.swing.text.html.Option;
@@ -13,12 +18,20 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@SpringBootTest
 class FAQCategoryRepositoryTest {
 
     @Autowired
     private FAQCategoryRepository fAQCategoryRepository;
+
+    @Autowired
+    private FAQRepository faqRepository;
+
+    @BeforeEach
+    public void setUp(){
+        faqRepository.deleteAll();
+        fAQCategoryRepository.deleteAll();
+    }
 
     @Test
     public void whenSaveFAQCategory_thenSuccess(){
