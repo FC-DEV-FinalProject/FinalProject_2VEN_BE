@@ -1,15 +1,12 @@
-package com.sysmatic2.finalbe.strategy.entity;
+package com.sysmatic2.finalbe.admin.entity;
 
+import com.sysmatic2.finalbe.strategy.entity.Auditable;
+import com.sysmatic2.finalbe.strategy.entity.StrategyIACEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +16,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "investment_asset_classes") //투자자산 분류
-public class InvestmentAssetClassesEntity extends Auditable{
+public class InvestmentAssetClassesEntity extends Auditable {
     @Id
     @Column(name="investment_asset_classes_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

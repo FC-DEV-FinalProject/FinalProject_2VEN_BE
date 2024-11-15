@@ -1,8 +1,8 @@
 //package com.sysmatic2.finalbe.strategy.repository;
 //
-//import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
+//import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
 //import com.sysmatic2.finalbe.strategy.entity.StrategyEntity;
-//import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
+//import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;

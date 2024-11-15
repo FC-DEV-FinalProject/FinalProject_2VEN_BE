@@ -1,22 +1,15 @@
 package com.sysmatic2.finalbe.strategy.service;
 
-import com.sysmatic2.finalbe.StandardCodeEntity;
 import com.sysmatic2.finalbe.strategy.dto.StrategyPayloadDto;
-import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
-import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
-import com.sysmatic2.finalbe.strategy.repository.InvestmentAssetClassesRepository;
+import com.sysmatic2.finalbe.admin.repository.InvestmentAssetClassesRepository;
 import com.sysmatic2.finalbe.strategy.repository.StrategyStandardCodeRepository;
-import com.sysmatic2.finalbe.strategy.repository.TradingTypeRepository;
+import com.sysmatic2.finalbe.admin.repository.TradingTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class StrategyServiceTest {

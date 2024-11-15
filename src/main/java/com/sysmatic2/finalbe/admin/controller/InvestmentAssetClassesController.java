@@ -1,14 +1,12 @@
-package com.sysmatic2.finalbe.strategy.controller;
+package com.sysmatic2.finalbe.admin.controller;
 
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesDto;
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesPayloadDto;
-import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
-import com.sysmatic2.finalbe.strategy.service.InvestmentAssetClassesService;
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesDto;
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesPayloadDto;
+import com.sysmatic2.finalbe.admin.service.InvestmentAssetClassesService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,7 @@ import java.util.*;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 @Tag(name = "Admin InvestmentAssetClasses Controller", description = "관리자가 투자자산 분류를 관리하는 컨트롤러")
-public class InvestmentAssetClassesRestController {
+public class InvestmentAssetClassesController {
     private final InvestmentAssetClassesService iacService;
 
     //1. 투자자산분류 목록 - pagination

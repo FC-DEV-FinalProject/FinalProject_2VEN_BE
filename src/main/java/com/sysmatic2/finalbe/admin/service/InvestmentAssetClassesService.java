@@ -1,9 +1,9 @@
-package com.sysmatic2.finalbe.strategy.service;
+package com.sysmatic2.finalbe.admin.service;
 
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesDto;
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesPayloadDto;
-import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
-import com.sysmatic2.finalbe.strategy.repository.InvestmentAssetClassesRepository;
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesDto;
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesPayloadDto;
+import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
+import com.sysmatic2.finalbe.admin.repository.InvestmentAssetClassesRepository;
 import com.sysmatic2.finalbe.util.DtoEntityConversionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;

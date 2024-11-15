@@ -1,19 +1,16 @@
 package com.sysmatic2.finalbe.strategy.service;
 
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesRegistrationDto;
 import com.sysmatic2.finalbe.strategy.dto.StrategyRegistrationDto;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeRegistrationDto;
-import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
-import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
-import com.sysmatic2.finalbe.strategy.repository.InvestmentAssetClassesRepository;
-import com.sysmatic2.finalbe.strategy.repository.TradingTypeRepository;
+import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
+import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
+import com.sysmatic2.finalbe.admin.repository.InvestmentAssetClassesRepository;
+import com.sysmatic2.finalbe.admin.repository.TradingTypeRepository;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static com.sysmatic2.finalbe.util.DtoEntityConversionUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 

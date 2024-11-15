@@ -1,12 +1,12 @@
 package com.sysmatic2.finalbe.util;
 
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesDto;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminRequestDto;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminResponseDto;
-import com.sysmatic2.finalbe.strategy.dto.InvestmentAssetClassesRegistrationDto;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeRegistrationDto;
-import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
-import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesDto;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminRequestDto;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminResponseDto;
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesRegistrationDto;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeRegistrationDto;
+import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
+import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;

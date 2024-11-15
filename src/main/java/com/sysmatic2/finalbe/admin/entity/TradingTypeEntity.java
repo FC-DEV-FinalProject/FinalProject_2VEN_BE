@@ -1,5 +1,6 @@
-package com.sysmatic2.finalbe.strategy.entity;
+package com.sysmatic2.finalbe.admin.entity;
 
+import com.sysmatic2.finalbe.strategy.entity.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class TradingTypeEntity extends Auditable{
+public class TradingTypeEntity extends Auditable {
 
     @Id
     @Column(name="trading_type_id")

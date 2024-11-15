@@ -1,6 +1,6 @@
 //package com.sysmatic2.finalbe.strategy.repository;
 //
-//import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
+//import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

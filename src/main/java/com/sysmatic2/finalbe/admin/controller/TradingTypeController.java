@@ -1,8 +1,8 @@
-package com.sysmatic2.finalbe.strategy.controller;
+package com.sysmatic2.finalbe.admin.controller;
 
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminRequestDto;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminResponseDto;
-import com.sysmatic2.finalbe.strategy.service.TradingTypeService;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminRequestDto;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminResponseDto;
+import com.sysmatic2.finalbe.admin.service.TradingTypeService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;

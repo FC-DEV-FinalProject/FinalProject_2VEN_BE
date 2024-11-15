@@ -1,12 +1,12 @@
 package com.sysmatic2.finalbe.strategy.repository;
 
+import com.sysmatic2.finalbe.admin.repository.TradingTypeRepository;
 import com.sysmatic2.finalbe.strategy.entity.StrategyEntity;
-import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
+import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;

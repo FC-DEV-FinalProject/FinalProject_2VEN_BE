@@ -1,6 +1,6 @@
 package com.sysmatic2.finalbe.strategy.entity;
 
-import com.sysmatic2.finalbe.StandardCodeEntity;
+import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;

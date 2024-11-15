@@ -1,5 +1,6 @@
 package com.sysmatic2.finalbe.strategy.entity;
 
+import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -11,7 +12,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "strategy_investment_asset_classes")

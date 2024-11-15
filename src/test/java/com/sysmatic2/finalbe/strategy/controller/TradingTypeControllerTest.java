@@ -1,11 +1,12 @@
 package com.sysmatic2.finalbe.strategy.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sysmatic2.finalbe.admin.controller.TradingTypeController;
 import com.sysmatic2.finalbe.config.SecurityConfig;
 import com.sysmatic2.finalbe.exception.TradingTypeNotFoundException;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminRequestDto;
-import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminResponseDto;
-import com.sysmatic2.finalbe.strategy.service.TradingTypeService;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminRequestDto;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminResponseDto;
+import com.sysmatic2.finalbe.admin.service.TradingTypeService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

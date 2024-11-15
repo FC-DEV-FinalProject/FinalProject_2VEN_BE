@@ -1,5 +1,7 @@
 package com.sysmatic2.finalbe.strategy.dto;
 
+import com.sysmatic2.finalbe.admin.dto.InvestmentAssetClassesRegistrationDto;
+import com.sysmatic2.finalbe.admin.dto.TradingTypeRegistrationDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
