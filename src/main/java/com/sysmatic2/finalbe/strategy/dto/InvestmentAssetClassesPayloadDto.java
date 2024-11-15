@@ -1,4 +1,4 @@
-package com.sysmatic2.finalbe.admin.dto;
+package com.sysmatic2.finalbe.strategy.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;

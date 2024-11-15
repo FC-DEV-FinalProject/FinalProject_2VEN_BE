@@ -1,11 +1,11 @@
-package com.sysmatic2.finalbe.admin.service;
+package com.sysmatic2.finalbe.strategy.service;
 
 import com.sysmatic2.finalbe.exception.DuplicateTradingTypeOrderException;
 import com.sysmatic2.finalbe.exception.TradingTypeNotFoundException;
-import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminRequestDto;
-import com.sysmatic2.finalbe.admin.dto.TradingTypeAdminResponseDto;
-import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
-import com.sysmatic2.finalbe.admin.repository.TradingTypeRepository;
+import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminRequestDto;
+import com.sysmatic2.finalbe.strategy.dto.TradingTypeAdminResponseDto;
+import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
+import com.sysmatic2.finalbe.strategy.repository.TradingTypeRepository;
 import com.sysmatic2.finalbe.util.DtoEntityConversionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

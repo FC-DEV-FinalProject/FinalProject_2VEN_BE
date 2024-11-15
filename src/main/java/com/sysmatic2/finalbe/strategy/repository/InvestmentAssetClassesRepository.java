@@ -1,6 +1,6 @@
-package com.sysmatic2.finalbe.admin.repository;
+package com.sysmatic2.finalbe.strategy.repository;
 
-import com.sysmatic2.finalbe.admin.entity.InvestmentAssetClassesEntity;
+import com.sysmatic2.finalbe.strategy.entity.InvestmentAssetClassesEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

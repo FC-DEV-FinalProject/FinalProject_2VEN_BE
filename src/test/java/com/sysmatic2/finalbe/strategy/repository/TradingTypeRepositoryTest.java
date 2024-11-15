@@ -1,7 +1,6 @@
 package com.sysmatic2.finalbe.strategy.repository;
 
-import com.sysmatic2.finalbe.admin.repository.TradingTypeRepository;
-import com.sysmatic2.finalbe.admin.entity.TradingTypeEntity;
+import com.sysmatic2.finalbe.strategy.entity.TradingTypeEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
